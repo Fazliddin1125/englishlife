@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 7%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 7%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 7%;
+    --primary: 347 77% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 15%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 347 77% 96%;
+    --accent-foreground: 347 77% 40%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 347 77% 50%;
+    --chart-1: 347 77% 50%;
+    --chart-2: 347 60% 65%;
+    --chart-3: 0 0% 30%;
+    --chart-4: 0 0% 50%;
+    --chart-5: 347 77% 40%;
+    --radius: 0.625rem;
+    --navy: 222 47% 11%;
+    --navy-foreground: 0 0% 100%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 15%;
+    --sidebar-primary: 347 77% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 347 77% 96%;
+    --sidebar-accent-foreground: 347 77% 40%;
+    --sidebar-border: 0 0% 92%;
+    --sidebar-ring: 347 77% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+/* Gradient text (primary) */
+@layer utilities {
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(347 77% 60%) 50%, hsl(var(--primary)) 100%);
+    background-size: 200% auto;
+  }
+  .border-gradient-primary {
+    border: 2px solid transparent;
+    background: linear-gradient(var(--tw-gradient-stops)) padding-box,
+      linear-gradient(135deg, hsl(var(--primary)), hsl(347 77% 65%), hsl(var(--primary))) border-box;
+  }
+  .section-padding {
+    @apply py-20 lg:py-28;
+  }
+}
+
+/* Scroll-driven: when .in-view is added, children with .reveal animate */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.in-view,
+.in-view .reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
