@@ -65,7 +65,7 @@ export function Footer() {
 
         <div className="mt-14 border-t border-navy-foreground/10 pt-8">
           <p className="text-center text-xs text-navy-foreground/50">
-            &copy; {new Date().getFullYear()} EnglishLife. Karyera portali.
+            &copy; {new Date().getFullYear()} EnglishLife.
           </p>
         </div>
       </div>

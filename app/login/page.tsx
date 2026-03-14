@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { GraduationCap, LogIn, Eye, EyeOff, ArrowLeft } from "lucide-react"
+import { LogIn, Eye, EyeOff, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -95,12 +95,7 @@ export default function LoginPage() {
         </div>
         <div className="relative z-10 max-w-md px-12">
           <div className="mb-8 flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary">
-              <GraduationCap className="h-6 w-6 text-primary-foreground" />
-            </div>
-            <span className="text-2xl font-bold text-background">
-              English<span className="text-primary">Life</span>
-            </span>
+            <img src="/logo.png" alt="EnglishLife" className="h-12 w-auto object-contain" />
           </div>
           <h2 className="text-3xl font-extrabold leading-tight text-background">
             HR boshqaruv tizimi
@@ -122,12 +117,7 @@ export default function LoginPage() {
           </Link>
 
           <div className="mb-6 flex items-center gap-2.5 lg:hidden">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary">
-              <GraduationCap className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <span className="text-2xl font-bold text-foreground">
-              English<span className="text-primary">Life</span>
-            </span>
+            <img src="/logo.png" alt="EnglishLife" className="h-10 w-auto object-contain" />
           </div>
 
           <h1 className="text-2xl font-extrabold text-foreground">Xush kelibsiz</h1>
