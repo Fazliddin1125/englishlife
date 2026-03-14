@@ -185,10 +185,6 @@ export default function LoginPage() {
               {loading ? "Kirish..." : "Kirish"}
             </Button>
           </form>
-
-          <p className="mt-6 text-center text-xs text-muted-foreground">
-            Backend orqali kirish. Superadmin uchun DB da role: &quot;superadmin&quot; bo&apos;lishi kerak.
-          </p>
         </div>
       </div>
     </div>
