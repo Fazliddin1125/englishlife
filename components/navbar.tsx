@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { LogIn, Menu, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const navLinks = [
@@ -32,21 +31,11 @@ export function Navbar() {
 
   return (
     <>
-      <header
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
-          scrolled
-            ? "bg-background/80 py-3 shadow-lg shadow-black/5 backdrop-blur-xl border-b border-border/40"
-            : "bg-transparent py-5"
-        )}
-      >
-        <div className="mx-auto flex h-12 max-w-7xl items-center justify-between px-4 lg:px-8">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b border-gray-100 transition-all duration-300">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-8">
           <Link
             href="/"
-            className={cn(
-              "relative flex items-center gap-2.5 transition-transform duration-300 hover:scale-[1.02]",
-              scrolled ? "text-foreground" : "text-white"
-            )}
+            className="relative flex items-center gap-2.5 transition-transform duration-300 hover:scale-[1.02]"
           >
             <img
               src="/logo.png"
@@ -60,51 +49,24 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className={cn(
-                  "group relative px-4 py-2 text-sm font-medium transition-colors",
-                  scrolled
-                    ? "text-muted-foreground hover:text-primary"
-                    : "text-white/90 hover:text-white"
-                )}
+                className="relative rounded-lg px-4 py-2 text-sm font-semibold text-gray-600 transition-all duration-200 hover:text-primary hover:bg-primary/5"
               >
                 {link.label}
-                <span className="absolute bottom-0 left-1/2 h-0.5 w-0 -translate-x-1/2 rounded-full bg-primary transition-all duration-300 group-hover:w-3/4" />
               </a>
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
-            <Link href="/login" className="hidden md:block">
-              <Button
-                size="sm"
-                className={cn(
-                  "rounded-full px-5 font-medium shadow-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-xl",
-                  scrolled
-                    ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                    : "bg-white text-primary hover:bg-white/95"
-                )}
-              >
-                <LogIn className="mr-1.5 h-4 w-4" />
-                Admin kirish
-              </Button>
-            </Link>
-
-            <button
-              type="button"
-              className={cn(
-                "rounded-xl p-2.5 transition-colors md:hidden",
-                scrolled ? "text-foreground" : "text-white"
-              )}
-              onClick={() => setMobileOpen(true)}
-              aria-label="Menyuni ochish"
-            >
-              <Menu className="h-6 w-6" />
-            </button>
-          </div>
+          <button
+            type="button"
+            className="rounded-xl p-2.5 text-gray-700 transition-colors hover:bg-gray-100 md:hidden"
+            onClick={() => setMobileOpen(true)}
+            aria-label="Menyuni ochish"
+          >
+            <Menu className="h-6 w-6" />
+          </button>
         </div>
       </header>
 
-      {/* Mobile menu overlay + panel */}
       <div
         className={cn(
           "fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm transition-opacity duration-300 md:hidden",
@@ -142,14 +104,6 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
-          <div className="mt-4 px-2">
-            <Link href="/login" onClick={() => setMobileOpen(false)}>
-              <Button className="w-full rounded-full gap-2">
-                <LogIn className="h-4 w-4" />
-                Admin kirish
-              </Button>
-            </Link>
-          </div>
         </nav>
       </aside>
     </>
