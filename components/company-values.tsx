@@ -8,39 +8,39 @@ import { cn } from "@/lib/utils"
 const values = [
   {
     icon: Heart,
-    title: "O‘qitishga ishtiyoq",
+    title: "Ishga mehr",
     description:
-      "Talabalarimizni g‘ayratli va o‘z ishiga sadoqatli o‘qituvchilar orqali ilhomlantirishga ishonamiz.",
+      "Dars o‘tishni shunchaki vazifa emas, bolalar bilan til topishish deb bilamiz. O‘quvchingiz yutug‘idan quvonsangiz — biz bilan bittasiz.",
   },
   {
     icon: Users,
-    title: "Hamkorlik madaniyati",
+    title: "Kuchli jamoa",
     description:
-      "Bir-birini qo‘llab-quvvatlovchi va o‘rganuvchi iqtidorli mutaxassislar bilan birga ishlang.",
+      "Bizda \"har kim o‘zi uchun\" degan gap yo‘q. Qiyin mavzuda to‘xtab qolsangiz yoki yangi g‘oya kelsa, jamoa har doim yoningizda.",
   },
   {
     icon: Rocket,
-    title: "Karyera rivoji",
+    title: "O‘sish imkoniyati",
     description:
-      "Doimiy o‘qitish va rivojlanish dasturlari bilan aniq martaba yo‘llari.",
+      "Shu joyda qolib ketmaysiz. Bugungi o‘qituvchimiz ertaga metodist yoki filial rahbari bo‘lishi biz uchun odatiy hol.",
   },
   {
     icon: Award,
-    title: "E‘tirof va mukofotlar",
+    title: "Mehnat qadri",
     description:
-      "Raqobatbardosh ish haqi, bonuslar va a‘lo ishlar uchun e‘tirof.",
+      "Yaxshi natija e’tiborsiz qolmaydi. Barqaror maoshdan tashqari, jamoaviy sayohatlar va shaxsiy bonuslar tizimi aniq yo‘lga qo‘yilgan.",
   },
   {
     icon: BookOpen,
-    title: "Zamonaviy metodika",
+    title: "Tayyor tizim",
     description:
-      "Eng yangi o‘qitish resurslari va Kembrij sertifikatlangan o‘quv dasturi.",
+      "Darsni qanday o‘tish bo‘yicha samarali metodikamiz bor. Ortiqcha qog‘ozbozlik emas, bor e’tiboringizni dars sifatiga qaratasiz.",
   },
   {
     icon: Globe,
-    title: "Ta'sir va maqsad",
+    title: "Katta maqsad",
     description:
-      "Minglab talabalarga chet elda o‘qish va ishlash orzularini amalga oshirishda yordam bering.",
+      "Biz shunchaki til o‘rgatmaymiz, yoshlarga dunyo eshiklarini ochamiz. Sizning darsingiz — kimningdir ushalgan orzusi demakdir.",
   },
 ]
 
@@ -57,8 +57,8 @@ export function CompanyValues() {
       ref={ref}
       className="relative bg-gradient-to-b from-background via-background to-secondary/20 section-padding"
     >
-      <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <div className={cn("mx-auto max-w-2xl text-center", visible && "in-view")}>
+      <div className="mx-auto max-w-7xl px-4  lg:px-8">
+        <div className={cn("mx-auto max-w-3xl text-center", visible && "in-view")}>
           <p
             className="reveal text-sm font-semibold uppercase tracking-wider text-primary"
             style={{ transitionDelay: "0ms" }}
@@ -66,16 +66,16 @@ export function CompanyValues() {
             Nima uchun biz?
           </p>
           <h2
-            className="reveal mt-2 text-balance text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl"
+            className="reveal  mt-2 text-balance text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl"
             style={{ transitionDelay: "80ms" }}
           >
-            Qadriyatlarimiz va madaniyat
+            Qadriyatlarimiz va madaniyatimiz
           </h2>
           <p
             className="reveal mt-4 text-pretty text-muted-foreground"
             style={{ transitionDelay: "160ms" }}
           >
-            EnglishLife jamoadoshlarimizga sarmoya kiritamiz. Karyerangizni qura olish uchun
+            Karyerangizni qura olish uchun
             bizni ajoyib qiladigan narsalarni bilib oling.
           </p>
         </div>

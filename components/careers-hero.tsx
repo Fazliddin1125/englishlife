@@ -36,18 +36,12 @@ export function CareersHero() {
 
       <div className="relative flex min-h-[100dvh] flex-col items-center justify-center px-4 pt-24 pb-32 text-center lg:px-8">
         {/* Badge */}
-        <div
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary-foreground/20 bg-primary-foreground/10 px-4 py-1.5 text-sm font-medium text-primary-foreground/95 backdrop-blur-sm animate-fade-in-up"
-          style={{ animationDelay: "0.1s" }}
-        >
-          <Sparkles className="h-4 w-4 text-primary-foreground" />
-          Karyera imkoniyatlari
-        </div>
+
 
         {/* Headline with staggered reveal */}
         <h1 className="max-w-4xl text-balance text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
           <span className="block animate-text-reveal opacity-0 [animation-delay:0.2s] [animation-fill-mode:forwards]">
-            EnglishLife
+            English Life
           </span>
           <span className="mt-2 block animate-text-reveal opacity-0 [animation-delay:0.4s] [animation-fill-mode:forwards]">
             jamoasiga qo‘shiling
@@ -58,8 +52,7 @@ export function CareersHero() {
           className="mx-auto mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-primary-foreground/90 animate-fade-in-up opacity-0 [animation-delay:0.7s] [animation-fill-mode:forwards] sm:text-xl"
           style={{ animationDelay: "0.7s" }}
         >
-          Jamiyatlarimizda til ta‘limini yangilab, zamonaviy filiallarimizda ishlashga tayyor
-          mutaxassislarni qidiramiz.
+          11 yillik tajriba va 11 ta filial — biz bilan nafaqat o‘quvchilar, balki mutaxassislar ham o‘sadi. 
         </p>
 
         {/* CTAs */}

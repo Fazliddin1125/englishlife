@@ -4,7 +4,6 @@ import { type ReactNode, useState } from "react"
 import Link from "next/link"
 import { useRouter, usePathname } from "next/navigation"
 import {
-  GraduationCap,
   Building2,
   Briefcase,
   Users,
@@ -103,12 +102,13 @@ export function DashboardShell({ children }: { children: ReactNode }) {
     <div className="flex h-full flex-col">
       {/* Logo */}
       <div className="flex h-16 items-center gap-2.5 px-5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
-          <GraduationCap className="h-4 w-4 text-primary-foreground" />
-        </div>
-        <span className="text-lg font-bold text-foreground">
-          English<span className="text-primary">Life</span>
-        </span>
+        <Link href="/" className="inline-flex items-center gap-2.5">
+          <img
+            src="/logo.png"
+            alt="EnglishLife"
+            className="h-8 w-auto object-contain"
+          />
+        </Link>
       </div>
 
       <Separator />

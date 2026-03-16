@@ -130,7 +130,7 @@ export function ApplicationsTable({
   }, [applications])
 
   const filtered = useMemo(() => {
-    return applications.filter((app) => {
+    const base = applications.filter((app) => {
       const matchSearch =
         !search ||
         app.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -150,6 +150,13 @@ export function ApplicationsTable({
       const matchBranch = branchFilter === "all" || branchId === branchFilter
       const matchJob = jobFilter === "all" || jobId === jobFilter
       return matchSearch && matchStatus && matchBranch && matchJob
+    })
+
+    // Yangi arizalar tepada ko'rinishi uchun createdAt bo'yicha kamayish tartibida saralash
+    return base.sort((a, b) => {
+      const ad = a.createdAt ? new Date(a.createdAt).getTime() : 0
+      const bd = b.createdAt ? new Date(b.createdAt).getTime() : 0
+      return bd - ad
     })
   }, [applications, search, statusFilter, branchFilter, jobFilter])
 

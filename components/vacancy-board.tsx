@@ -58,8 +58,12 @@ export function VacancyBoard({ vacancies }: VacancyBoardProps) {
   }, [isInView, visible])
 
   return (
-    <section id="vacancies" ref={sectionRef} className="relative bg-gradient-to-b from-secondary/30 via-background to-background section-padding">
-      <div className={cn("mx-auto max-w-7xl px-4 pt-12 pb-4 lg:px-8", visible && "in-view")}>
+    <section
+      id="vacancies"
+      ref={sectionRef}
+      className="relative bg-gradient-to-b from-secondary/10 via-background to-background pt-10 pb-20 lg:pt-12 lg:pb-24"
+    >
+      <div className={cn("mx-auto max-w-7xl px-4 pb-4 lg:px-8", visible && "in-view")}>
         <div className="reveal" style={{ transitionDelay: "0ms" }}>
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
             Bo'sh ish o'rinlari

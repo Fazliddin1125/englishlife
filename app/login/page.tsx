@@ -127,7 +127,7 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="username">Foydalanuvchi</Label>
+              <Label htmlFor="username">Foydalanuvchi nomi</Label>
               <Input
                 id="username"
                 type="text"

@@ -21,7 +21,7 @@ export function Footer() {
               />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-navy-foreground/70">
-              O'zbekistonning yetakchi ingliz tili ta'lim markazi. 2014-yildan beri sifatli ta'lim berib kelmoqdamiz.
+              O'zbekistonning yetakchi ingliz tili ta'lim markazi. 2015-yildan beri sifatli ta'lim berib kelmoqdamiz.
             </p>
             <div className="mt-6 flex gap-3">
               {[
