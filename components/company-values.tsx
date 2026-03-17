@@ -16,13 +16,13 @@ const values = [
     icon: Users,
     title: "Kuchli jamoa",
     description:
-      "Bizda \"har kim o‘zi uchun\" degan gap yo‘q. Qiyin mavzuda to‘xtab qolsangiz yoki yangi g‘oya kelsa, jamoa har doim yoningizda.",
+      "Bizda \"har kim o‘zi uchun\" degan gap yo‘q. Qiyin mavzuda to‘xtab qolsangiz yoki yangi g‘oya kelmasa, jamoa har doim yoningizda.",
   },
   {
     icon: Rocket,
     title: "O‘sish imkoniyati",
     description:
-      "Shu joyda qolib ketmaysiz. Bugungi o‘qituvchimiz ertaga metodist yoki filial rahbari bo‘lishi biz uchun odatiy hol.",
+      "Bir joyda qolib ketmaysiz. Bugungi o‘qituvchimiz ertaga metodist yoki filial rahbari bo‘lishi biz uchun odatiy hol.",
   },
   {
     icon: Award,
