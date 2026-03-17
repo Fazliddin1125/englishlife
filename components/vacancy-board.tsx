@@ -164,7 +164,7 @@ export function VacancyBoard({ vacancies }: VacancyBoardProps) {
                   <div className="border-t border-border px-6 py-4">
                     <Link href={`/vacancy/${vacancy._id}`}>
                       <Button className="w-full gap-2 rounded-full">
-                        Batafsil
+                        Ariza berish
                         <ChevronRight className="h-4 w-4" />
                       </Button>
                     </Link>
