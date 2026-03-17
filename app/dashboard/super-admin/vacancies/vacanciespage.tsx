@@ -68,6 +68,7 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
   const [parttime, setParttime] = useState(true)
   const [online, setOnline] = useState(false)
   const [requirmentsText, setRequirmentsText] = useState("")
+  const [offersText, setOffersText] = useState("")
 
   const [viewOpen, setViewOpen] = useState(false)
   const [viewVacancy, setViewVacancy] = useState<IVacancy | null>(null)
@@ -100,6 +101,7 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
     setParttime(true)
     setOnline(false)
     setRequirmentsText("")
+    setOffersText("")
   }
 
   function openCreate() {
@@ -123,6 +125,7 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
     setParttime(v.parttime ?? true)
     setOnline(v.online ?? false)
     setRequirmentsText((v.requirments ?? []).join("\n"))
+    setOffersText((v.offers ?? []).join("\n") as string)
     setFormOpen(true)
   }
 
@@ -140,6 +143,10 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
       .split("\n")
       .map((s) => s.trim())
       .filter(Boolean)
+    const offers = offersText
+      .split("\n")
+      .map((s) => s.trim())
+      .filter(Boolean)
     try {
       if (editingVacancy) {
         const payload: VacancyPayload = {
@@ -151,6 +158,7 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
           parttime,
           online,
           requirments,
+          offers,
         }
         const updated = await updateVacancy(editingVacancy._id, payload, token)
         if (updated) {
@@ -383,6 +391,16 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
                   value={requirmentsText}
                   onChange={(e) => setRequirmentsText(e.target.value)}
                   placeholder="IELTS 7+&#10;2 yillik tajriba&#10;..."
+                  rows={4}
+                  className="rounded-xl"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Takliflar (har bir qatorda bitta)</Label>
+                <Textarea
+                  value={offersText}
+                  onChange={(e) => setOffersText(e.target.value)}
+                  placeholder="Barqaror maosh&#10;Ichki treninglar&#10;Bonuslar va sayohatlar&#10;..."
                   rows={4}
                   className="rounded-xl"
                 />

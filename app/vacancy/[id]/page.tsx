@@ -96,6 +96,25 @@ export default async function VacancyDetailPage({ params }: PageProps) {
                 )}
               </ul>
             </div>
+
+            {/* Takliflar */}
+            <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm">
+              <h2 className="mb-5 flex items-center gap-3 text-xl font-bold text-gray-900">
+                <GraduationCap className="h-5 w-5 text-[#E11D48]" /> Takliflar
+              </h2>
+              <ul className="space-y-4">
+                {vacancy.offers && vacancy.offers.length > 0 ? (
+                  vacancy.offers.map((offer: string, i: number) => (
+                    <li key={i} className="flex items-start gap-3 text-[14px] text-gray-600">
+                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#E11D48]" />
+                      {offer.trim()}
+                    </li>
+                  ))
+                ) : (
+                  <li className="text-gray-400 italic">Ma'lumot kiritilmagan</li>
+                )}
+              </ul>
+            </div>
           </div>
 
           {/* Right Column: Form */}

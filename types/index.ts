@@ -47,6 +47,7 @@ export interface IVacancy {
   owner: IUser;
   status: boolean;
   requirments?: string[];
+  offers?: string[];
   createdAt?: string | Date;
   updatedAt?: string | Date;  
   parttime?: boolean;

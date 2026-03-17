@@ -22,6 +22,7 @@ export default function VacancyApplicationForm({ vacancy, jobName, branchName }:
   const [hasCertificate, setHasCertificate] = useState(false)
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [photoError, setPhotoError] = useState<string>("")
   function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (file) {
@@ -33,8 +34,15 @@ export default function VacancyApplicationForm({ vacancy, jobName, branchName }:
 
 async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
   e.preventDefault();
-  setIsLoading(true);
   const fd = new FormData(e.currentTarget);
+
+  const photoFile = fd.get("photo") as File;
+  if (!photoFile || !photoFile.size) {
+    setPhotoError("Rasm yuklash majburiy");
+    return;
+  }
+  setPhotoError("");
+  setIsLoading(true);
 
   const dataToSend = new FormData();
   
@@ -50,8 +58,7 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
   dataToSend.append("maried", fd.get("maritalStatus") === "maried" ? "true" : "false");
   dataToSend.append("ielts", (fd.get("ieltsScore") as string) || "");
 
-  const photoFile = fd.get("photo") as File;
-  if (photoFile?.size) {
+  if (photoFile.size) {
     dataToSend.append("photo", photoFile);
   }
 
@@ -71,10 +78,11 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 
     if (res.ok) {
       setSubmitted(true);
-      setIsLoading(false);
     }
   } catch (error) {
     console.error("Xato:", error);
+  } finally {
+    setIsLoading(false);
   }
 }
 
@@ -115,6 +123,9 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
           <div className="text-center sm:text-left">
             <p className="text-sm font-medium text-foreground">Rasmingizni yuklang</p>
             <p className="text-xs text-muted-foreground">JPG, PNG formatda, 2MB gacha</p>
+            {photoError && (
+              <p className="mt-1 text-xs text-destructive">{photoError}</p>
+            )}
           </div>
         </div>
 
