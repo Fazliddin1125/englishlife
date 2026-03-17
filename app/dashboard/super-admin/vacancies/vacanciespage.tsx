@@ -64,7 +64,6 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
   const [description, setDescription] = useState("")
   const [branchId, setBranchId] = useState("")
   const [jobId, setJobId] = useState("")
-  const [ownerId, setOwnerId] = useState("")
   const [status, setStatus] = useState(true)
   const [parttime, setParttime] = useState(true)
   const [online, setOnline] = useState(false)
@@ -97,7 +96,6 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
     setDescription("")
     setBranchId("")
     setJobId("")
-    setOwnerId("")
     setStatus(true)
     setParttime(true)
     setOnline(false)
@@ -116,8 +114,11 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
     setTitle(v.title)
     setDescription(v.description)
     setBranchId(typeof v.branch === "object" && v.branch ? v.branch._id : "")
-    setJobId(typeof v.job === "object" && v.job ? (v.job as { _id?: string })._id ?? (v.job as { id?: string }).id ?? "" : "")
-    setOwnerId(typeof v.owner === "object" && v.owner ? (v.owner as { _id?: string })._id ?? (v.owner as { id?: string }).id ?? "" : "")
+    setJobId(
+      typeof v.job === "object" && v.job
+        ? (v.job as { _id?: string })._id ?? (v.job as { id?: string }).id ?? ""
+        : ""
+    )
     setStatus(v.status ?? true)
     setParttime(v.parttime ?? true)
     setOnline(v.online ?? false)
@@ -128,10 +129,6 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
   async function handleSubmit() {
     if (!title.trim() || !description.trim() || !branchId || !jobId) {
       toast.error("Sarlavha, tavsif, filial va lavozim to'ldirilishi shart")
-      return
-    }
-    if (editingVacancy && !ownerId) {
-      toast.error("Egasi tanlanishi shart")
       return
     }
     if (!token) {
@@ -150,7 +147,6 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
           description: description.trim(),
           branch: branchId,
           job: jobId,
-          owner: ownerId,
           status,
           parttime,
           online,
@@ -366,23 +362,7 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
                   </Select>
                 </div>
               </div>
-              {editingVacancy && (
-                <div className="space-y-2">
-                  <Label>Egasi</Label>
-                  <Select value={ownerId} onValueChange={setOwnerId}>
-                    <SelectTrigger className="rounded-xl">
-                      <SelectValue placeholder="Foydalanuvchi tanlang" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {users.map((u) => (
-                        <SelectItem key={u._id} value={u._id}>
-                          {u.fullname || u.username}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
+              {/* Egasi maydoni olib tashlandi – superadmin har qanday vakansiyani tahrirlashi mumkin */}
               <div className="flex flex-wrap items-center gap-6">
                 <div className="flex items-center gap-2">
                   <Switch id="status" checked={status} onCheckedChange={setStatus} />
