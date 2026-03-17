@@ -44,12 +44,6 @@ export default async function VacancyDetailPage({ params }: PageProps) {
             <ArrowLeft className="h-4 w-4" /> Barcha vakansiyalar
           </Link>
 
-          <div className="mb-4">
-             <span className="rounded bg-white px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-[#E11D48]">
-                {vacancy.online ? "MASOFADAN" : "OFLINE"}
-             </span>
-          </div>
-
           <h1 className="text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl tracking-tight">
             {vacancy.title}
           </h1>

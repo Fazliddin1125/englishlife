@@ -123,20 +123,18 @@ export function VacancyBoard({ vacancies }: VacancyBoardProps) {
                 >
                   <div className="flex flex-1 flex-col p-6">
                     <div className="mb-4 flex flex-wrap gap-2">
-                      {cat && (
+                      {jobName && (
                         <span
-                          className={`inline-block rounded px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider ${cat.color}`}
+                          className={`inline-block rounded px-2.5 py-0.5 text-[11px] font-semibold tracking-wide ${
+                            emp ? emp.color : "bg-primary text-primary-foreground"
+                          }`}
                         >
-                          {vacancy.online ? "MASOFADAN" : "OFLINE"}
+                          {jobName}
                         </span>
                       )}
-                      {emp && (
-                        <span
-                          className={`inline-block rounded px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider ${emp.color}`}
-                        >
-                          {vacancy.parttime ? "Qisman stavka" : "To'liq kun"}
-                        </span>
-                      )}
+                      <span className="inline-block rounded px-2.5 py-0.5 text-[11px] font-medium tracking-wide bg-secondary text-foreground/80">
+                        {vacancy.parttime ? "Qisman stavka" : "To'liq kun"}
+                      </span>
                     </div>
 
                     <h3 className="mb-2 text-lg font-bold text-foreground">

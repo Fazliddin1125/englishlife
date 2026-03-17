@@ -74,7 +74,7 @@ function statusBadgeClass(status: ApplicationStatus) {
 
 function getVacancyTitle(app: IApplication): string {
   const v = app.vacancy
-  if (!v) return "—"
+  if (!v) return "Zahira (vakansiyasiz ariza)"
   if (typeof v === "string") return v
   return v.title ?? "—"
 }
