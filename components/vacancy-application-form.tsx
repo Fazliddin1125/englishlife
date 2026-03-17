@@ -23,6 +23,7 @@ export default function VacancyApplicationForm({ vacancy, jobName, branchName }:
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [photoError, setPhotoError] = useState<string>("")
+  const [certError, setCertError] = useState<string>("")
   function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (file) {
@@ -42,6 +43,19 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     return;
   }
   setPhotoError("");
+
+  // Agar sertifikat bor deb belgilansa, kamida 1 ta rasm sertifikat kerak
+  const certInput = (e.currentTarget.querySelector(
+    'input[name="certificate"]'
+  ) as HTMLInputElement | null)
+  if (hasCertificate) {
+    const files = certInput?.files
+    if (!files || files.length === 0) {
+      setCertError("Sertifikat rasm(lar)ini yuklash majburiy");
+      return;
+    }
+  }
+  setCertError("")
   setIsLoading(true);
 
   const dataToSend = new FormData();
@@ -62,7 +76,6 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     dataToSend.append("photo", photoFile);
   }
 
-  const certInput = e.currentTarget.querySelector('input[name="certificate"]') as HTMLInputElement | null;
   if (certInput?.files) {
     for (let i = 0; i < certInput.files.length; i++) {
       dataToSend.append("certificate", certInput.files[i]);
@@ -170,8 +183,11 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
             <>
               <Input name="certificateName" placeholder="Sertifikat nomi (CELTA, IELTS...)" className="rounded-xl" />
               <div className="space-y-1">
-                <Label className="text-sm">Sertifikat fayl(lar) – PDF, JPG, PNG (2 ta bo‘lsa ikkalasini yuklang)</Label>
-                <Input name="certificate" type="file" accept=".pdf,.jpg,.jpeg,.png" multiple className="rounded-xl" />
+                <Label className="text-sm">Sertifikat fayl(lar) – JPG, PNG (2 ta bo‘lsa ikkalasini yuklang)</Label>
+                <Input name="certificate" type="file" accept=".jpg,.jpeg,.png" multiple className="rounded-xl" />
+                {certError && (
+                  <p className="mt-1 text-xs text-destructive">{certError}</p>
+                )}
               </div>
             </>
           )}

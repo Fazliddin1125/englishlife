@@ -51,6 +51,8 @@ export function TalentPoolForm() {
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [jobTitles, setJobTitles] = useState<{ _id: string; name: string }[]>([])
   const [loading, setLoading] = useState(false)
+  const [certError, setCertError] = useState<string>("")
+  const [photoError, setPhotoError] = useState<string>("")
 
   React.useEffect(() => {
     fetchJobTitles().then(setJobTitles)
@@ -70,6 +72,26 @@ export function TalentPoolForm() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const fd = new FormData(e.currentTarget)
+
+    const photoFile = fd.get("photo") as File
+    if (!photoFile || !photoFile.size) {
+      setPhotoError("Rasm yuklash majburiy")
+      return
+    }
+    setPhotoError("")
+
+    const certInput = e.currentTarget.querySelector(
+      'input[name="certificate"]'
+    ) as HTMLInputElement | null
+    if (hasCertificate) {
+      const files = certInput?.files
+      if (!files || files.length === 0) {
+        setCertError("Sertifikat rasm(lar)ini yuklash majburiy")
+        return
+      }
+    }
+    setCertError("")
+
     const dataToSend = new FormData()
     dataToSend.append("name", (fd.get("fullName") as string) || "")
     dataToSend.append("age", (fd.get("age") as string) || "")
@@ -81,11 +103,9 @@ export function TalentPoolForm() {
     dataToSend.append("certificate", hasCertificate ? (fd.get("certificateName") as string) || "" : "")
     dataToSend.append("maried", "false")
     dataToSend.append("ielts", ieltsScore || "")
-    const photoFile = fd.get("photo") as File
-    if (photoFile?.size) {
+    if (photoFile.size) {
       dataToSend.append("photo", photoFile)
     }
-    const certInput = e.currentTarget.querySelector('input[name="certificate"]') as HTMLInputElement | null
     if (certInput?.files) {
       for (let i = 0; i < certInput.files.length; i++) {
         dataToSend.append("certificate", certInput.files[i])
@@ -211,6 +231,9 @@ export function TalentPoolForm() {
                   <p className="text-xs text-muted-foreground">
                     JPG, PNG formatda
                   </p>
+                  {photoError && (
+                    <p className="mt-1 text-xs text-destructive">{photoError}</p>
+                  )}
                 </div>
               </div>
 
@@ -297,8 +320,17 @@ export function TalentPoolForm() {
                       className="rounded-xl"
                     />
                     <div className="space-y-1">
-                      <Label className="text-sm">Sertifikat fayl(lar) – PDF, JPG, PNG</Label>
-                      <Input name="certificate" type="file" accept=".pdf,.jpg,.jpeg,.png" multiple className="rounded-xl" />
+                      <Label className="text-sm">Sertifikat fayl(lar) – JPG, PNG</Label>
+                      <Input
+                        name="certificate"
+                        type="file"
+                        accept=".jpg,.jpeg,.png"
+                        multiple
+                        className="rounded-xl"
+                      />
+                      {certError && (
+                        <p className="mt-1 text-xs text-destructive">{certError}</p>
+                      )}
                     </div>
                   </>
                 )}
