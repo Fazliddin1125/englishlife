@@ -389,16 +389,7 @@ export function TalentPoolForm() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="tp-resume">CV yuklash</Label>
-                  <Input
-                    id="tp-resume"
-                    name="resume"
-                    type="file"
-                    accept=".pdf,.doc,.docx"
-                    className="rounded-xl"
-                  />
-                </div>
+               
               </div>
 
               {/* Motivation */}
