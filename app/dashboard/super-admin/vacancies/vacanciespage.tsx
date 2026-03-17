@@ -455,6 +455,16 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
                     </ul>
                   </div>
                 )}
+                {viewVacancy.offers && viewVacancy.offers.length > 0 && (
+                  <div className="space-y-2">
+                    <Label className="text-muted-foreground">Takliflar</Label>
+                    <ul className="list-inside list-disc text-sm">
+                      {viewVacancy.offers.map((o, i) => (
+                        <li key={i}>{o}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
           </DialogContent>
