@@ -79,6 +79,14 @@ function getVacancyTitle(app: IApplication): string {
   return v.title ?? "—"
 }
 
+function getApplicationBranchName(app: IApplication): string {
+  const b = app.branch
+  if (b && typeof b === "object" && "name" in b && b.name) return b.name
+  const v = app.vacancy
+  if (v && typeof v === "object" && v.branch?.name) return v.branch.name
+  return "—"
+}
+
 export function ApplicationsTable({
   initialApplications,
   title = "Barcha nomzodlar",
@@ -269,6 +277,7 @@ export function ApplicationsTable({
                 <TableRow>
                   <TableHead className="w-[200px]">Ism</TableHead>
                   {!hideVacancyColumn && <TableHead>Vakansiya</TableHead>}
+                  {hideVacancyColumn && <TableHead>Filial</TableHead>}
                   <TableHead>Telefon / Yosh</TableHead>
                   <TableHead>Ta&apos;lim / IELTS</TableHead>
                   <TableHead>Sertifikat</TableHead>
@@ -311,6 +320,13 @@ export function ApplicationsTable({
                       <TableCell>
                         <span className="text-sm text-muted-foreground">
                           {getVacancyTitle(app)}
+                        </span>
+                      </TableCell>
+                    )}
+                    {hideVacancyColumn && (
+                      <TableCell>
+                        <span className="text-sm text-muted-foreground">
+                          {getApplicationBranchName(app)}
                         </span>
                       </TableCell>
                     )}
@@ -393,7 +409,7 @@ export function ApplicationsTable({
                 {filtered.length === 0 && (
                   <TableRow>
                     <TableCell
-                      colSpan={hideVacancyColumn ? 6 : 7}
+                      colSpan={hideVacancyColumn ? 7 : 7}
                       className="py-8 text-center text-muted-foreground"
                     >
                       Nomzod topilmadi.
@@ -435,6 +451,12 @@ export function ApplicationsTable({
                 <div>
                   <Label className="text-muted-foreground">Vakansiya</Label>
                   <p className="text-sm font-medium">{getVacancyTitle(viewApp)}</p>
+                </div>
+              )}
+              {hideVacancyColumn && (
+                <div>
+                  <Label className="text-muted-foreground">Filial</Label>
+                  <p className="text-sm font-medium">{getApplicationBranchName(viewApp)}</p>
                 </div>
               )}
               <div>

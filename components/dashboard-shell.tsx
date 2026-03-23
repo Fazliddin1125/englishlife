@@ -38,8 +38,6 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   }
 
   const isSuperAdmin = user.role === "super_admin"
-  const branch = user.branchId ? getBranchById(user.branchId) : null
-
   const superAdminNav: NavItem[] = [
     {
       label: "Boshqaruv paneli",
@@ -99,7 +97,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   }
 
   const sidebarContent = (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col overflow-hidden">
       {/* Logo */}
       <div className="flex h-16 items-center gap-2.5 px-5">
         <Link href="/" className="inline-flex items-center gap-2.5">
@@ -113,29 +111,8 @@ export function DashboardShell({ children }: { children: ReactNode }) {
 
       <Separator />
 
-      {/* User Info */}
-      <div className="px-5 py-4">
-        <p className="text-sm font-semibold text-foreground">{user.name}</p>
-        <p className="text-xs text-muted-foreground">{user.email}</p>
-        <div className="mt-2 flex gap-2">
-          {branch && (
-            <div className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
-              <Building2 className="h-3 w-3" />
-              {branch.name}
-            </div>
-          )}
-          {isSuperAdmin && (
-            <div className="inline-flex items-center gap-1 rounded-full bg-primary px-2.5 py-0.5 text-xs font-medium text-primary-foreground">
-              Super admin
-            </div>
-          )}
-        </div>
-      </div>
-
-      <Separator />
-
       {/* Nav */}
-      <nav className="flex-1 space-y-1 px-3 py-4">
+      <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
         {navItems.map((item) => {
           const isActive = pathname === item.href
           return (
@@ -180,7 +157,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
   )
 
   return (
-    <div className="flex min-h-screen bg-secondary/50">
+    <div className="flex h-screen overflow-hidden bg-secondary/50">
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
@@ -196,7 +173,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 border-r border-border bg-background transition-transform lg:static lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 w-64 overflow-hidden border-r border-border bg-background transition-transform lg:static lg:translate-x-0",
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
@@ -212,7 +189,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
       </aside>
 
       {/* Main */}
-      <div className="flex flex-1 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col">
         {/* Top bar */}
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b border-border bg-background/80 px-4 backdrop-blur-xl lg:px-6">
           <button
@@ -229,7 +206,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
         </header>
 
         {/* Page content */}
-        <main className="flex-1 p-4 lg:p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto p-4 lg:p-6">{children}</main>
       </div>
     </div>
   )

@@ -59,6 +59,7 @@ export type ApplicationStatus = "pending" | "accepted" | "rejected";
 
 export interface IApplication {
   _id: string;
+  branch?: { _id: string; name: string } | string | null;
   vacancy?: { _id: string; title?: string; branch?: { name: string }; job?: { name: string } } | string | null;
   photo?: string;
   name: string;

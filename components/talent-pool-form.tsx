@@ -30,6 +30,8 @@ import {
 } from "@/components/ui/dialog"
 import { submitTalentPoolApplication } from "@/actions/application.action"
 import { toast } from "sonner"
+import { fetchBranches } from "@/actions/vacancy.action"
+import type { IBranch } from "@/types"
 
 async function fetchJobTitles(): Promise<{ _id: string; name: string }[]> {
   try {
@@ -50,12 +52,17 @@ export function TalentPoolForm() {
   const [hasCertificate, setHasCertificate] = useState(false)
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
   const [jobTitles, setJobTitles] = useState<{ _id: string; name: string }[]>([])
+  const [branches, setBranches] = useState<IBranch[]>([])
+  const [desiredBranch, setDesiredBranch] = useState("")
   const [loading, setLoading] = useState(false)
   const [certError, setCertError] = useState<string>("")
   const [photoError, setPhotoError] = useState<string>("")
 
   React.useEffect(() => {
-    fetchJobTitles().then(setJobTitles)
+    Promise.all([fetchJobTitles(), fetchBranches()]).then(([jobs, branchList]) => {
+      setJobTitles(jobs)
+      setBranches(branchList)
+    })
   }, [open])
 
   function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -97,6 +104,7 @@ export function TalentPoolForm() {
     dataToSend.append("age", (fd.get("age") as string) || "")
     dataToSend.append("phone", (fd.get("phone") as string) || "")
     dataToSend.append("university", (fd.get("education") as string) || "")
+    dataToSend.append("branch", desiredBranch)
     dataToSend.append("lastwork", [desiredRole, (fd.get("motivation") as string) || ""].filter(Boolean).join(". ") || "")
     dataToSend.append("motivationLetter", (fd.get("motivation") as string) || "")
     dataToSend.append("hasCertificate", String(hasCertificate))
@@ -129,6 +137,7 @@ export function TalentPoolForm() {
   function resetForm() {
     setSubmitted(false)
     setDesiredRole("")
+    setDesiredBranch("")
     setIeltsScore("")
     setHasCertificate(false)
     setPhotoPreview(null)
@@ -389,7 +398,25 @@ export function TalentPoolForm() {
                     </SelectContent>
                   </Select>
                 </div>
-               
+                <div className="space-y-2">
+                  <Label>Qiziqtirgan filial</Label>
+                  <Select
+                    value={desiredBranch}
+                    onValueChange={setDesiredBranch}
+                    required
+                  >
+                    <SelectTrigger className="rounded-xl">
+                      <SelectValue placeholder="Filial tanlang" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {branches.map((b) => (
+                        <SelectItem key={b._id} value={b._id}>
+                          {b.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
               {/* Motivation */}
