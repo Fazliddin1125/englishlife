@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { LogIn, Eye, EyeOff, ArrowLeft } from "lucide-react"
@@ -17,19 +17,14 @@ export default function LoginPage() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const { login, isAuthenticated, isReady, user } = useAuth()
+  const { login, logout, isReady } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
     if (!isReady) return
-    if (isAuthenticated && user) {
-      if (user.role === "super_admin") {
-        router.replace("/dashboard/super-admin")
-      } else {
-        router.replace("/dashboard/branch-admin")
-      }
-    }
-  }, [isReady, isAuthenticated, user, router])
+    // /login sahifasi har doim qayta autentifikatsiya nuqtasi bo'lsin.
+    logout()
+  }, [isReady, logout])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -52,7 +47,12 @@ export default function LoginPage() {
         setError("Server javobi noto'g'ri")
         return
       }
-      const role = backendUser.role === "superadmin" ? "super_admin" : "branch_admin"
+      // Backend roles: "superadmin" | "admin" | "user"
+      // Adminlar ham to'liq dashboard ko'rishi uchun "admin" -> "super_admin" map qilamiz.
+      const role =
+        backendUser.role === "superadmin" || backendUser.role === "admin"
+          ? "super_admin"
+          : "branch_admin"
       login(
         {
           id: backendUser.id,
@@ -75,7 +75,7 @@ export default function LoginPage() {
     }
   }
 
-  if (!isReady || (isAuthenticated && user)) {
+  if (!isReady) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-secondary">
         <div className="text-center">

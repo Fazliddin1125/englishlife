@@ -1,4 +1,5 @@
 import type { IApplication } from "@/types"
+import { triggerUnauthorized } from "@/lib/auth-callback"
 
 const API = process.env.NEXT_PUBLIC_API_URL
 
@@ -32,20 +33,35 @@ export async function updateApplication(
 
 export async function changeApplicationStatus(
   id: string,
-  status: IApplication["status"]
+  status: IApplication["status"],
+  token: string
 ): Promise<IApplication | null> {
   const res = await fetch(`${API}/application/change-status/${id}`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({ status }),
   })
+  if (res.status === 401) {
+    triggerUnauthorized()
+    return null
+  }
   if (!res.ok) return null
   const data = await res.json()
   return data.application ?? null
 }
 
-export async function deleteApplication(id: string): Promise<boolean> {
-  const res = await fetch(`${API}/application/delete/${id}`, { method: "DELETE" })
+export async function deleteApplication(id: string, token: string): Promise<boolean> {
+  const res = await fetch(`${API}/application/delete/${id}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  if (res.status === 401) {
+    triggerUnauthorized()
+    return false
+  }
   return res.ok
 }
 

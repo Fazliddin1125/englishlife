@@ -11,9 +11,10 @@ import { DashboardShell } from "@/components/dashboard-shell"
 
 import { IBranch } from "@/types"
 import { toast } from "sonner"
+import { useAuth } from "@/lib/auth-context"
 
 function BranchesContent({ branches }: { branches: IBranch[] }) {
-
+  const { token } = useAuth()
 
   const [dialogOpen, setDialogOpen] = useState(false)
 
@@ -25,9 +26,13 @@ function BranchesContent({ branches }: { branches: IBranch[] }) {
 
   async function handleAdd() {
     if (!name.trim()) return
+    if (!token) return toast.error("Siz tizimga kirmagansiz")
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/utility/create/branch`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({ name }),
     })
     if (res.ok) {
@@ -42,8 +47,10 @@ function BranchesContent({ branches }: { branches: IBranch[] }) {
 
   
   async function handleDelete(id: string) {
+    if (!token) return toast.error("Siz tizimga kirmagansiz")
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/utility/delete/branch/${id}`, {
       method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
     })
     if (res.ok) {
       toast.success("Filial o‘chirildi")

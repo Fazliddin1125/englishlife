@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
+import { useAuth } from "@/lib/auth-context"
 import {
   Phone,
   FileText,
@@ -97,6 +98,7 @@ export function ApplicationsTable({
   hideVacancyColumn?: boolean
 }) {
   const [applications, setApplications] = useState<IApplication[]>(initialApplications)
+  const { token } = useAuth()
   const [search, setSearch] = useState("")
   const [statusFilter, setStatusFilter] = useState<string>("all")
   const [branchFilter, setBranchFilter] = useState<string>("all")
@@ -169,7 +171,8 @@ export function ApplicationsTable({
   }, [applications, search, statusFilter, branchFilter, jobFilter])
 
   async function handleStatusChange(id: string, status: ApplicationStatus) {
-    const updated = await changeApplicationStatus(id, status)
+    if (!token) return toast.error("Siz tizimga kirmagansiz")
+    const updated = await changeApplicationStatus(id, status, token)
     if (updated) {
       setApplications((prev) =>
         prev.map((a) => (a._id === id ? updated : a))
@@ -181,7 +184,8 @@ export function ApplicationsTable({
   }
 
   async function handleDelete(id: string) {
-    const ok = await deleteApplication(id)
+    if (!token) return toast.error("Siz tizimga kirmagansiz")
+    const ok = await deleteApplication(id, token)
     if (ok) {
       setApplications((prev) => prev.filter((a) => a._id !== id))
       toast.success("Ariza o'chirildi")

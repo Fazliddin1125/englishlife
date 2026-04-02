@@ -26,7 +26,15 @@ import {
 
 function VacanciesContent() {
   const { user } = useAuth()
-  if (!user?.branchId) return null
+  if (!user?.branchId) {
+    return (
+      <DashboardShell>
+        <div className="rounded-lg border border-border bg-card p-6 text-sm text-muted-foreground">
+          Ushbu akkauntga filial biriktirilmagan. Super admin orqali filial biriktiring.
+        </div>
+      </DashboardShell>
+    )
+  }
 
   return <VacanciesInner branchId={user.branchId} />
 }

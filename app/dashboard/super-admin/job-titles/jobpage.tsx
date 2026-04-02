@@ -12,8 +12,10 @@ import { DashboardShell } from "@/components/dashboard-shell"
 
 import { IBranch } from "@/types"
 import { toast } from "sonner"
+import { useAuth } from "@/lib/auth-context"
 
 function JobsContent({ branches }: { branches: IBranch[] }) {
+  const { token } = useAuth()
   const [dialogOpen, setDialogOpen] = useState(false)
   const [branchesState, setBranchesState] = useState<IBranch[]>(branches)
 
@@ -25,9 +27,13 @@ function JobsContent({ branches }: { branches: IBranch[] }) {
 
   async function handleAdd() {
     if (!name.trim()) return
+    if (!token) return toast.error("Siz tizimga kirmagansiz")
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/utility/create/job`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({ name }),
     })
     if (res.ok) {
@@ -42,8 +48,10 @@ function JobsContent({ branches }: { branches: IBranch[] }) {
 
   
   async function handleDelete(id: string) {
+    if (!token) return toast.error("Siz tizimga kirmagansiz")
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/utility/delete/job/${id}`, {
       method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
     })
     if (res.ok) {
       toast.success("Lavozim o‘chirildi")
