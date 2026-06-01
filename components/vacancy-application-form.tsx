@@ -149,7 +149,7 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
           </div>
           <div className="space-y-2">
             <Label htmlFor="age">Yoshingiz</Label>
-            <Input id="age" name="age" type="number" min={18} max={60} placeholder="25" className="rounded-xl" required />
+            <Input id="age" name="age" type="number"  max={60} placeholder="25" className="rounded-xl" required />
           </div>
         </div>
 

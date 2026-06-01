@@ -264,7 +264,7 @@ export function TalentPoolForm() {
                     id="tp-age"
                     name="age"
                     type="number"
-                    min={18}
+                  
                     max={60}
                     placeholder="25"
                     className="rounded-xl"
