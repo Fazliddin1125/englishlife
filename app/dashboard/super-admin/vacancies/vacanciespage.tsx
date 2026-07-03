@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Building2, Plus, Trash2, Eye, Pencil } from "lucide-react"
+import { Building2, Plus, Trash2, Eye, Pencil, Pause, Play } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -32,6 +32,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { DashboardShell } from "@/components/dashboard-shell"
+import { Badge } from "@/components/ui/badge"
 import { useAuth } from "@/lib/auth-context"
 import { IBranch, IVacancy } from "@/types"
 import { toast } from "sonner"
@@ -39,6 +40,7 @@ import {
   fetchBranches,
   fetchJobs,
   fetchUsers,
+  fetchAllVacancies,
   createVacancy,
   updateVacancy,
   deleteVacancy,
@@ -72,6 +74,7 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
 
   const [viewOpen, setViewOpen] = useState(false)
   const [viewVacancy, setViewVacancy] = useState<IVacancy | null>(null)
+  const [togglingId, setTogglingId] = useState<string | null>(null)
 
   useEffect(() => {
     setVacanciesState(vacancies)
@@ -90,6 +93,13 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
     }
     load()
   }, [])
+
+  useEffect(() => {
+    if (!token) return
+    fetchAllVacancies(token).then(({ vacancies: all }) => {
+      if (all.length) setVacanciesState(all)
+    })
+  }, [token])
 
   function resetForm() {
     setEditingVacancy(null)
@@ -218,6 +228,28 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
     }
   }
 
+  async function handleToggleStatus(v: IVacancy) {
+    if (!token) {
+      toast.error("Avtorizatsiya kerak")
+      return
+    }
+    const nextStatus = !(v.status ?? true)
+    setTogglingId(v._id)
+    try {
+      const updated = await updateVacancy(v._id, { status: nextStatus }, token)
+      if (updated) {
+        setVacanciesState((prev) =>
+          prev.map((item) => (item._id === v._id ? updated : item))
+        )
+        toast.success(nextStatus ? "Vakansiya yoqildi" : "Vakansiya pauza qilindi")
+      } else {
+        toast.error("Holatni o'zgartirib bo'lmadi")
+      }
+    } finally {
+      setTogglingId(null)
+    }
+  }
+
   const getBranchName = (v: IVacancy) =>
     typeof v.branch === "object" && v.branch ? v.branch.name : ""
   const getJobName = (v: IVacancy) =>
@@ -254,7 +286,8 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
                   <TableHead>Filial</TableHead>
                   <TableHead>Lavozim</TableHead>
                   <TableHead>Egasi</TableHead>
-                  <TableHead className="w-[120px]">Amallar</TableHead>
+                  <TableHead>Holat</TableHead>
+                  <TableHead className="w-[160px]">Amallar</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -264,7 +297,30 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
                     <TableCell className="text-muted-foreground">{getBranchName(vacancy)}</TableCell>
                     <TableCell className="text-muted-foreground">{getJobName(vacancy)}</TableCell>
                     <TableCell className="text-muted-foreground">{getOwnerName(vacancy)}</TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={vacancy.status !== false ? "default" : "secondary"}
+                        className="rounded-full"
+                      >
+                        {vacancy.status !== false ? "Aktiv" : "Pauza"}
+                      </Badge>
+                    </TableCell>
                     <TableCell className="flex items-center gap-1">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => handleToggleStatus(vacancy)}
+                        disabled={togglingId === vacancy._id}
+                        aria-label={vacancy.status !== false ? "Pauza qilish" : "Yoqish"}
+                        title={vacancy.status !== false ? "Pauza qilish" : "Yoqish"}
+                      >
+                        {vacancy.status !== false ? (
+                          <Pause className="h-4 w-4" />
+                        ) : (
+                          <Play className="h-4 w-4" />
+                        )}
+                      </Button>
                       <Button
                         variant="ghost"
                         size="icon"
@@ -297,7 +353,7 @@ function VacanciesContent({ vacancies }: { vacancies: IVacancy[] }) {
                 ))}
                 {vacanciesState.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={5} className="py-8 text-center text-muted-foreground">
+                    <TableCell colSpan={6} className="py-8 text-center text-muted-foreground">
                       Vakansiyalar yo‘q. &quot;Vakansiya qo‘shish&quot; orqali qo‘shing.
                     </TableCell>
                   </TableRow>

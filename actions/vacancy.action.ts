@@ -15,6 +15,25 @@ export type VacancyPayload = {
   requirments?: string[]
 }
 
+export async function fetchAllVacancies(token: string): Promise<{ vacancies: IVacancy[] }> {
+  try {
+    const res = await fetch(`${API}/vacancy/get/all`, {
+      cache: "no-store",
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    if (res.status === 401) {
+      triggerUnauthorized()
+      return { vacancies: [] }
+    }
+    if (!res.ok) throw new Error("Failed to fetch all vacancies")
+    const data = await res.json()
+    return { vacancies: data.vacancies ?? [] }
+  } catch (error) {
+    console.error("Error fetching all vacancies:", error)
+    return { vacancies: [] }
+  }
+}
+
 export async function fetchVacancies(): Promise<{ vacancies: IVacancy[] }> {
   try {
     const res = await fetch(`${API}/vacancy/get`, { cache: "no-store" })
