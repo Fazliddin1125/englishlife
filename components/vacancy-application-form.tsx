@@ -10,6 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Link from "next/link"
 import { IVacancy } from "@/types"
 import { Textarea } from "./ui/textarea"
+import { fetchDistricts } from "@/actions/vacancy.action"
+import { toast } from "sonner"
 
 type Props = {
   vacancy: IVacancy
@@ -24,6 +26,13 @@ export default function VacancyApplicationForm({ vacancy, jobName, branchName }:
   const [isLoading, setIsLoading] = useState(false)
   const [photoError, setPhotoError] = useState<string>("")
   const [certError, setCertError] = useState<string>("")
+  const [districts, setDistricts] = useState<{ _id: string; name: string }[]>([])
+  const [address, setAddress] = useState("")
+
+  React.useEffect(() => {
+    fetchDistricts().then(setDistricts)
+  }, [])
+
   function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (file) {
@@ -56,6 +65,12 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     }
   }
   setCertError("")
+
+  if (!address) {
+    toast.error("Yashash manzilini tanlang");
+    return;
+  }
+
   setIsLoading(true);
 
   const dataToSend = new FormData();
@@ -65,6 +80,7 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
   dataToSend.append("name", fd.get("fullName") as string);
   dataToSend.append("age", fd.get("age") as string);
   dataToSend.append("phone", fd.get("phone") as string);
+  dataToSend.append("address", address);
   dataToSend.append("university", fd.get("education") as string);
   dataToSend.append("lastwork", (fd.get("lastwork") as string) || "");
   dataToSend.append("hasCertificate", String(hasCertificate));
@@ -156,6 +172,20 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         <div className="space-y-2">
           <Label htmlFor="phone">Telefon raqam</Label>
           <Input id="phone" name="phone" placeholder="+998 XX XXX XXXX" className="rounded-xl" required />
+        </div>
+
+        <div className="space-y-2">
+          <Label>Yashash manzili (tuman)</Label>
+          <Select value={address} onValueChange={setAddress} required>
+            <SelectTrigger className="rounded-xl">
+              <SelectValue placeholder="Tumaningizni tanlang" />
+            </SelectTrigger>
+            <SelectContent>
+              {districts.map((d) => (
+                <SelectItem key={d._id} value={d.name}>{d.name}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="space-y-2">

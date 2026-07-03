@@ -14,6 +14,7 @@ import {
   ChevronRight,
   LayoutDashboard,
   ExternalLink,
+  MapPin,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -53,6 +54,11 @@ export function DashboardShell({ children }: { children: ReactNode }) {
       label: "Lavozimlar",
       href: "/dashboard/super-admin/job-titles",
       icon: <Briefcase className="h-[18px] w-[18px]" />,
+    },
+    {
+      label: "Tumanlar",
+      href: "/dashboard/super-admin/districts",
+      icon: <MapPin className="h-[18px] w-[18px]" />,
     },
     {
       label: "Barcha nomzodlar",

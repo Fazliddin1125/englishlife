@@ -65,6 +65,7 @@ export interface IApplication {
   name: string;
   age: number;
   phone: string;
+  address?: string;
   university?: string;
   lastwork?: string;
   motivationLetter?: string;

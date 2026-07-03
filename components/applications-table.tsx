@@ -464,6 +464,10 @@ export function ApplicationsTable({
                 </div>
               )}
               <div>
+                <Label className="text-muted-foreground">Yashash manzili</Label>
+                <p className="text-sm">{viewApp.address || "—"}</p>
+              </div>
+              <div>
                 <Label className="text-muted-foreground">Universitet</Label>
                 <p className="text-sm">{viewApp.university || "—"}</p>
               </div>

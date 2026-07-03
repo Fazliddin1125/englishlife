@@ -30,7 +30,7 @@ import {
 } from "@/components/ui/dialog"
 import { submitTalentPoolApplication } from "@/actions/application.action"
 import { toast } from "sonner"
-import { fetchBranches } from "@/actions/vacancy.action"
+import { fetchBranches, fetchDistricts } from "@/actions/vacancy.action"
 import type { IBranch } from "@/types"
 
 async function fetchJobTitles(): Promise<{ _id: string; name: string }[]> {
@@ -54,14 +54,17 @@ export function TalentPoolForm() {
   const [jobTitles, setJobTitles] = useState<{ _id: string; name: string }[]>([])
   const [branches, setBranches] = useState<IBranch[]>([])
   const [desiredBranch, setDesiredBranch] = useState("")
+  const [districts, setDistricts] = useState<{ _id: string; name: string }[]>([])
+  const [address, setAddress] = useState("")
   const [loading, setLoading] = useState(false)
   const [certError, setCertError] = useState<string>("")
   const [photoError, setPhotoError] = useState<string>("")
 
   React.useEffect(() => {
-    Promise.all([fetchJobTitles(), fetchBranches()]).then(([jobs, branchList]) => {
+    Promise.all([fetchJobTitles(), fetchBranches(), fetchDistricts()]).then(([jobs, branchList, districtList]) => {
       setJobTitles(jobs)
       setBranches(branchList)
+      setDistricts(districtList)
     })
   }, [open])
 
@@ -99,12 +102,18 @@ export function TalentPoolForm() {
     }
     setCertError("")
 
+    if (!address) {
+      toast.error("Yashash manzilini tanlang")
+      return
+    }
+
     const dataToSend = new FormData()
     dataToSend.append("name", (fd.get("fullName") as string) || "")
     dataToSend.append("age", (fd.get("age") as string) || "")
     dataToSend.append("phone", (fd.get("phone") as string) || "")
     dataToSend.append("university", (fd.get("education") as string) || "")
     dataToSend.append("branch", desiredBranch)
+    dataToSend.append("address", address)
     dataToSend.append("lastwork", [desiredRole, (fd.get("motivation") as string) || ""].filter(Boolean).join(". ") || "")
     dataToSend.append("motivationLetter", (fd.get("motivation") as string) || "")
     dataToSend.append("hasCertificate", String(hasCertificate))
@@ -138,6 +147,7 @@ export function TalentPoolForm() {
     setSubmitted(false)
     setDesiredRole("")
     setDesiredBranch("")
+    setAddress("")
     setIeltsScore("")
     setHasCertificate(false)
     setPhotoPreview(null)
@@ -283,6 +293,23 @@ export function TalentPoolForm() {
                   className="rounded-xl"
                   required
                 />
+              </div>
+
+              {/* Yashash manzili */}
+              <div className="space-y-2">
+                <Label>Yashash manzili (tuman)</Label>
+                <Select value={address} onValueChange={setAddress} required>
+                  <SelectTrigger className="rounded-xl">
+                    <SelectValue placeholder="Tumaningizni tanlang" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {districts.map((d) => (
+                      <SelectItem key={d._id} value={d.name}>
+                        {d.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* Education */}

@@ -53,6 +53,13 @@ export async function fetchJobs(): Promise<{ _id: string; name: string }[]> {
   return data.jobs ?? []
 }
 
+export async function fetchDistricts(): Promise<{ _id: string; name: string }[]> {
+  const res = await fetch(`${API}/utility/get/district`, { cache: "no-store" })
+  if (!res.ok) return []
+  const data = await res.json()
+  return data.districts ?? []
+}
+
 export async function fetchUsers(): Promise<{ _id: string; username: string; fullname?: string }[]> {
   const res = await fetch(`${API}/utility/get/users`, { cache: "no-store" })
   if (!res.ok) return []
