@@ -99,7 +99,7 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
   dataToSend.append("workDuration", workDuration);
   dataToSend.append("hasCertificate", String(hasCertificate));
   dataToSend.append("certificate", String(fd.get("certificateName") || ""));
-  dataToSend.append("maried", fd.get("maritalStatus") === "maried" ? "true" : "false");
+  dataToSend.append("maried", fd.get("maritalStatus") === "married" ? "true" : "false");
   dataToSend.append("ielts", (fd.get("ieltsScore") as string) || "");
 
   if (photoFile.size) {

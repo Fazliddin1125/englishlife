@@ -472,9 +472,15 @@ export function ApplicationsTable({
                   <p className="text-sm font-medium">{getApplicationBranchName(viewApp)}</p>
                 </div>
               )}
-              <div>
-                <Label className="text-muted-foreground">Yashash manzili</Label>
-                <p className="text-sm">{viewApp.address || "—"}</p>
+              <div className="flex gap-4">
+                <div>
+                  <Label className="text-muted-foreground">Yashash manzili</Label>
+                  <p className="text-sm">{viewApp.address || "—"}</p>
+                </div>
+                <div>
+                  <Label className="text-muted-foreground">Oilaviy holat</Label>
+                  <p className="text-sm">{viewApp.maried ? "Turmush qurgan" : "Turmush qurmagan"}</p>
+                </div>
               </div>
               <div>
                 <Label className="text-muted-foreground">Universitet</Label>

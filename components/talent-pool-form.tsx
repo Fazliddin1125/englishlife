@@ -58,6 +58,7 @@ export function TalentPoolForm() {
   const [address, setAddress] = useState("")
   const [experience, setExperience] = useState("")
   const [workDuration, setWorkDuration] = useState("")
+  const [maritalStatus, setMaritalStatus] = useState("")
   const [loading, setLoading] = useState(false)
   const [certError, setCertError] = useState<string>("")
   const [photoError, setPhotoError] = useState<string>("")
@@ -119,6 +120,11 @@ export function TalentPoolForm() {
       return
     }
 
+    if (!maritalStatus) {
+      toast.error("Oilaviy holatingizni tanlang")
+      return
+    }
+
     const dataToSend = new FormData()
     dataToSend.append("name", (fd.get("fullName") as string) || "")
     dataToSend.append("age", (fd.get("age") as string) || "")
@@ -132,7 +138,7 @@ export function TalentPoolForm() {
     dataToSend.append("motivationLetter", (fd.get("motivation") as string) || "")
     dataToSend.append("hasCertificate", String(hasCertificate))
     dataToSend.append("certificate", hasCertificate ? (fd.get("certificateName") as string) || "" : "")
-    dataToSend.append("maried", "false")
+    dataToSend.append("maried", maritalStatus === "married" ? "true" : "false")
     dataToSend.append("ielts", ieltsScore || "")
     if (photoFile.size) {
       dataToSend.append("photo", photoFile)
@@ -164,6 +170,7 @@ export function TalentPoolForm() {
     setAddress("")
     setExperience("")
     setWorkDuration("")
+    setMaritalStatus("")
     setIeltsScore("")
     setHasCertificate(false)
     setPhotoPreview(null)
@@ -449,6 +456,20 @@ export function TalentPoolForm() {
                     <SelectItem value="1 - 2 yil">1 - 2 yil</SelectItem>
                     <SelectItem value="2 yildan ko'p">2 yildan ko&apos;p</SelectItem>
                     <SelectItem value="Uzoq muddat">Uzoq muddat</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Oilaviy holat */}
+              <div className="space-y-2">
+                <Label>Oilaviy holat</Label>
+                <Select value={maritalStatus} onValueChange={setMaritalStatus} required>
+                  <SelectTrigger className="rounded-xl">
+                    <SelectValue placeholder="Holat tanlang" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="married">Turmush qurgan</SelectItem>
+                    <SelectItem value="single">Turmush qurmagan</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
