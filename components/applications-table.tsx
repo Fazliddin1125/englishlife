@@ -322,8 +322,11 @@ export function ApplicationsTable({
                     </TableCell>
                     {!hideVacancyColumn && (
                       <TableCell>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="block text-sm text-foreground">
                           {getVacancyTitle(app)}
+                        </span>
+                        <span className="block text-xs text-muted-foreground">
+                          {getApplicationBranchName(app)}
                         </span>
                       </TableCell>
                     )}
@@ -452,9 +455,15 @@ export function ApplicationsTable({
                 </div>
               </div>
               {!hideVacancyColumn && (
-                <div>
-                  <Label className="text-muted-foreground">Vakansiya</Label>
-                  <p className="text-sm font-medium">{getVacancyTitle(viewApp)}</p>
+                <div className="flex gap-4">
+                  <div>
+                    <Label className="text-muted-foreground">Vakansiya</Label>
+                    <p className="text-sm font-medium">{getVacancyTitle(viewApp)}</p>
+                  </div>
+                  <div>
+                    <Label className="text-muted-foreground">Filial</Label>
+                    <p className="text-sm font-medium">{getApplicationBranchName(viewApp)}</p>
+                  </div>
                 </div>
               )}
               {hideVacancyColumn && (
