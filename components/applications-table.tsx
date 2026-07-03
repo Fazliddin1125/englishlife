@@ -475,6 +475,16 @@ export function ApplicationsTable({
                 <Label className="text-muted-foreground">Oxirgi ish / tajriba</Label>
                 <p className="text-sm whitespace-pre-wrap">{viewApp.lastwork || "—"}</p>
               </div>
+              <div className="flex gap-4">
+                <div>
+                  <Label className="text-muted-foreground">Ish tajribasi</Label>
+                  <p className="text-sm">{viewApp.experience || "—"}</p>
+                </div>
+                <div>
+                  <Label className="text-muted-foreground">Bizda ishlash muddati</Label>
+                  <p className="text-sm">{viewApp.workDuration || "—"}</p>
+                </div>
+              </div>
               {hideVacancyColumn && viewApp.motivationLetter && (
                 <div>
                   <Label className="text-muted-foreground">Motivatsion xat</Label>

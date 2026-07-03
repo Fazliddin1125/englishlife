@@ -56,6 +56,8 @@ export function TalentPoolForm() {
   const [desiredBranch, setDesiredBranch] = useState("")
   const [districts, setDistricts] = useState<{ _id: string; name: string }[]>([])
   const [address, setAddress] = useState("")
+  const [experience, setExperience] = useState("")
+  const [workDuration, setWorkDuration] = useState("")
   const [loading, setLoading] = useState(false)
   const [certError, setCertError] = useState<string>("")
   const [photoError, setPhotoError] = useState<string>("")
@@ -107,6 +109,16 @@ export function TalentPoolForm() {
       return
     }
 
+    if (!experience) {
+      toast.error("Ish tajribangizni tanlang")
+      return
+    }
+
+    if (!workDuration) {
+      toast.error("Bizda qancha vaqt ishlamoqchiligingizni tanlang")
+      return
+    }
+
     const dataToSend = new FormData()
     dataToSend.append("name", (fd.get("fullName") as string) || "")
     dataToSend.append("age", (fd.get("age") as string) || "")
@@ -114,6 +126,8 @@ export function TalentPoolForm() {
     dataToSend.append("university", (fd.get("education") as string) || "")
     dataToSend.append("branch", desiredBranch)
     dataToSend.append("address", address)
+    dataToSend.append("experience", experience)
+    dataToSend.append("workDuration", workDuration)
     dataToSend.append("lastwork", [desiredRole, (fd.get("motivation") as string) || ""].filter(Boolean).join(". ") || "")
     dataToSend.append("motivationLetter", (fd.get("motivation") as string) || "")
     dataToSend.append("hasCertificate", String(hasCertificate))
@@ -148,6 +162,8 @@ export function TalentPoolForm() {
     setDesiredRole("")
     setDesiredBranch("")
     setAddress("")
+    setExperience("")
+    setWorkDuration("")
     setIeltsScore("")
     setHasCertificate(false)
     setPhotoPreview(null)
@@ -400,6 +416,39 @@ export function TalentPoolForm() {
                       </SelectItem>
                     ))}
                     <SelectItem value="Yo'q">Topshirmagan</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Ish tajribasi */}
+              <div className="space-y-2">
+                <Label>Ish tajribangiz</Label>
+                <Select value={experience} onValueChange={setExperience} required>
+                  <SelectTrigger className="rounded-xl">
+                    <SelectValue placeholder="Tajribangizni tanlang" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1 yildan kam">1 yildan kam</SelectItem>
+                    <SelectItem value="1 yildan ko'p">1 yildan ko&apos;p</SelectItem>
+                    <SelectItem value="4 yildan ko'p">4 yildan ko&apos;p</SelectItem>
+                    <SelectItem value="Ishlamagan">Ishlamagan</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Bizda ishlash muddati */}
+              <div className="space-y-2">
+                <Label>Bizda qancha vaqt ishlamoqchisiz?</Label>
+                <Select value={workDuration} onValueChange={setWorkDuration} required>
+                  <SelectTrigger className="rounded-xl">
+                    <SelectValue placeholder="Muddatni tanlang" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="6 oydan kam">6 oydan kam</SelectItem>
+                    <SelectItem value="6 oy - 1 yil">6 oy - 1 yil</SelectItem>
+                    <SelectItem value="1 - 2 yil">1 - 2 yil</SelectItem>
+                    <SelectItem value="2 yildan ko'p">2 yildan ko&apos;p</SelectItem>
+                    <SelectItem value="Uzoq muddat">Uzoq muddat</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

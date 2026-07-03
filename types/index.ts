@@ -68,6 +68,8 @@ export interface IApplication {
   address?: string;
   university?: string;
   lastwork?: string;
+  experience?: string;
+  workDuration?: string;
   motivationLetter?: string;
   hasCertificate: boolean;
   certificate?: string;

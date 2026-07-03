@@ -28,6 +28,8 @@ export default function VacancyApplicationForm({ vacancy, jobName, branchName }:
   const [certError, setCertError] = useState<string>("")
   const [districts, setDistricts] = useState<{ _id: string; name: string }[]>([])
   const [address, setAddress] = useState("")
+  const [experience, setExperience] = useState("")
+  const [workDuration, setWorkDuration] = useState("")
 
   React.useEffect(() => {
     fetchDistricts().then(setDistricts)
@@ -71,6 +73,16 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     return;
   }
 
+  if (!experience) {
+    toast.error("Ish tajribangizni tanlang");
+    return;
+  }
+
+  if (!workDuration) {
+    toast.error("Bizda qancha vaqt ishlamoqchiligingizni tanlang");
+    return;
+  }
+
   setIsLoading(true);
 
   const dataToSend = new FormData();
@@ -83,6 +95,8 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
   dataToSend.append("address", address);
   dataToSend.append("university", fd.get("education") as string);
   dataToSend.append("lastwork", (fd.get("lastwork") as string) || "");
+  dataToSend.append("experience", experience);
+  dataToSend.append("workDuration", workDuration);
   dataToSend.append("hasCertificate", String(hasCertificate));
   dataToSend.append("certificate", String(fd.get("certificateName") || ""));
   dataToSend.append("maried", fd.get("maritalStatus") === "maried" ? "true" : "false");
@@ -197,9 +211,40 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 
         <div className="space-y-2">
           <Label htmlFor="lastwork" className="flex items-center gap-2">
-            <Building className="h-4 w-4 text-primary" /> Eski ish joyi va tajribangiz?
+            <Building className="h-4 w-4 text-primary" /> Eski ish joyi (bo&apos;lsa)
           </Label>
-          <Textarea id="lastwork" name="lastwork" placeholder="Eski ish joyi nomi va lavozim, tajriba/ Ishlamagan" className="rounded-xl" required />
+          <Textarea id="lastwork" name="lastwork" placeholder="Eski ish joyi nomi va lavozim (ixtiyoriy)" className="rounded-xl" />
+        </div>
+
+        <div className="space-y-2">
+          <Label>Ish tajribangiz</Label>
+          <Select value={experience} onValueChange={setExperience} required>
+            <SelectTrigger className="rounded-xl">
+              <SelectValue placeholder="Tajribangizni tanlang" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="1 yildan kam">1 yildan kam</SelectItem>
+              <SelectItem value="1 yildan ko'p">1 yildan ko&apos;p</SelectItem>
+              <SelectItem value="4 yildan ko'p">4 yildan ko&apos;p</SelectItem>
+              <SelectItem value="Ishlamagan">Ishlamagan</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label>Bizda qancha vaqt ishlamoqchisiz?</Label>
+          <Select value={workDuration} onValueChange={setWorkDuration} required>
+            <SelectTrigger className="rounded-xl">
+              <SelectValue placeholder="Muddatni tanlang" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="6 oydan kam">6 oydan kam</SelectItem>
+              <SelectItem value="6 oy - 1 yil">6 oy - 1 yil</SelectItem>
+              <SelectItem value="1 - 2 yil">1 - 2 yil</SelectItem>
+              <SelectItem value="2 yildan ko'p">2 yildan ko&apos;p</SelectItem>
+              <SelectItem value="Uzoq muddat">Uzoq muddat</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="space-y-3 rounded-xl border border-border bg-secondary/30 p-4">
