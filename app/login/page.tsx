@@ -38,7 +38,11 @@ export default function LoginPage() {
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
-        setError(data.failure || "Login yoki parol noto'g'ri")
+        if (res.status === 429) {
+          setError(data.message || "Juda ko'p urinish. 15 daqiqadan keyin qayta urinib ko'ring.")
+          return
+        }
+        setError(data.failure || data.message || "Login yoki parol noto'g'ri")
         return
       }
       const backendUser = data.user
