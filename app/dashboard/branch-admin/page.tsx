@@ -101,7 +101,7 @@ function BranchDashboardContent() {
                         c.status === "interview" ? "bg-blue-50 text-blue-700" :
                         "bg-yellow-50 text-yellow-700"
                       }`}>
-                        {c.status === "accepted" ? "Qabul" : c.status === "rejected" ? "Rad" : c.status === "interview" ? "Intervyu" : "Kutilmoqda"}
+                        {c.status === "accepted" ? "Qabul" : c.status === "rejected" ? "Rad" : c.status === "interview" ? "Suhbat" : "Kutilmoqda"}
                       </span>
                     </div>
                   </div>

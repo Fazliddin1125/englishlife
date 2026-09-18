@@ -15,6 +15,7 @@ import {
   LayoutDashboard,
   ExternalLink,
   MapPin,
+  KeyRound,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -143,6 +144,19 @@ export function DashboardShell({ children }: { children: ReactNode }) {
 
       {/* Bottom */}
       <div className="space-y-1 border-t border-border p-3">
+        <Link
+          href="/dashboard/change-password"
+          onClick={() => setSidebarOpen(false)}
+          className={cn(
+            "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+            pathname === "/dashboard/change-password"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+          )}
+        >
+          <KeyRound className="h-[18px] w-[18px]" />
+          Parolni yangilash
+        </Link>
         <Link
           href="/"
           className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"

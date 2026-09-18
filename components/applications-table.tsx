@@ -58,8 +58,9 @@ import { toast } from "sonner"
 
 const STATUS_OPTIONS: { value: ApplicationStatus; label: string }[] = [
   { value: "pending", label: "Kutilmoqda" },
-  { value: "accepted", label: "Qabul qilindi" },
+  { value: "interview", label: "Suhbatga chaqirildi" },
   { value: "rejected", label: "Rad etildi" },
+  { value: "accepted", label: "Qabul qilindi" },
 ]
 
 function statusBadgeClass(status: ApplicationStatus) {
@@ -68,6 +69,8 @@ function statusBadgeClass(status: ApplicationStatus) {
       return "bg-green-50 text-green-700 border-green-200"
     case "rejected":
       return "bg-red-50 text-red-700 border-red-200"
+    case "interview":
+      return "bg-blue-50 text-blue-700 border-blue-200"
     default:
       return "bg-yellow-50 text-yellow-700 border-yellow-200"
   }

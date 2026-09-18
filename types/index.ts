@@ -55,7 +55,7 @@ export interface IVacancy {
 }
 
 /** Backend Application modeli (candidate / ariza) */
-export type ApplicationStatus = "pending" | "accepted" | "rejected";
+export type ApplicationStatus = "pending" | "interview" | "rejected" | "accepted";
 
 export interface IApplication {
   _id: string;

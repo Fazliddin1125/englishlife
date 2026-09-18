@@ -56,9 +56,9 @@ function StatCard({
 
 const STATUS_LABELS: Record<string, string> = {
   pending: "Kutilmoqda",
-  accepted: "Qabul qilindi",
+  interview: "Suhbatga chaqirildi",
   rejected: "Rad etildi",
-  interview: "Intervyu",
+  accepted: "Qabul qilindi",
 }
 
 function statusClass(status: string): string {
